@@ -1,0 +1,13 @@
+{
+    "name": "blood-donation-app",
+    "version": "1.0.0",
+    "description": "A web app connecting blood donors with recipients",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
+  

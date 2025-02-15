@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register as Donor</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Register as a Blood Donor</h1>
+    <nav>
+      <a href="index.html">Home</a> | 
+      <a href="donor.html">Register as Donor</a> | 
+      <a href="request.html">Request Blood</a>
+    </nav>
+  </header>
+  <main>
+    <form id="donorForm">
+      <!-- Basic Details -->
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="fatherName">Father's Name:</label>
+      <input type="text" id="fatherName" name="fatherName" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <!-- Contact Details -->
+      <label for="mobile">Mobile Number:</label>
+      <input type="tel" id="mobile" name="mobile" required>
+
+      <label for="email">E-mail (optional):</label>
+      <input type="email" id="email" name="email">
+
+      <!-- Blood Information -->
+      <label for="bloodGroup">Blood Group:</label>
+      <input type="text" id="bloodGroup" name="bloodGroup" required>
+
+      <!-- Address Details -->
+      <fieldset>
+        <legend>Full Address</legend>
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+
+        <label for="pinCode">Pin-code:</label>
+        <input type="text" id="pinCode" name="pinCode" required>
+
+        <label for="altMobile">Alternate Mobile Number:</label>
+        <input type="tel" id="altMobile" name="altMobile">
+      </fieldset>
+
+      <!-- Additional Information -->
+      <label for="previouslyDonated">Previously Donated?</label>
+      <select id="previouslyDonated" name="previouslyDonated" required>
+        <option value="">Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label for="healthIssues">Any Health Issues?</label>
+      <textarea id="healthIssues" name="healthIssues"></textarea>
+
+      <button type="submit">Register as Donor</button>
+    </form>
+    <div id="donorMsg"></div>
+
+    <script>
+      // Handle donor registration form submission
+      document.getElementById('donorForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const donorData = {
+          name: document.getElementById('name').value,
+          fatherName: document.getElementById('fatherName').value,
+          age: document.getElementById('age').value,
+          gender: document.getElementById('gender').value,
+          mobile: document.getElementById('mobile').value,
+          email: document.getElementById('email').value,
+          bloodGroup: document.getElementById('bloodGroup').value,
+          street: document.getElementById('street').value,
+          city: document.getElementById('city').value,
+          state: document.getElementById('state').value,
+          pinCode: document.getElementById('pinCode').value,
+          altMobile: document.getElementById('altMobile').value,
+          previouslyDonated: document.getElementById('previouslyDonated').value,
+          healthIssues: document.getElementById('healthIssues').value
+        };
+
+        fetch('/api/donors', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(donorData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('donorMsg').innerText = "Donor registered successfully!";
+          document.getElementById('donorForm').reset();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('donorMsg').innerText = "Error registering donor.";
+        });
+      });
+    </script>
+  </main>
+</body>
+</html>
